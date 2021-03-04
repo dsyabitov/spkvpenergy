@@ -1,0 +1,15 @@
+.event-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.event-item-card {
+    width: 100%;
+}
+
+.event-item-card-content {
+    width: 100%;
+}

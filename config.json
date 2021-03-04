@@ -1,0 +1,10 @@
+{
+  "login": "monitoring@spkvp.ru",
+  "password": "spkvp123",
+  "log_level": "info",
+  "max_connections": 10,
+  "device_id": 90985,
+  "operative_params": [
+    "In.u1", "In.u2", "In.u3", "vRM.1", "vRM.2", "vRM.3"
+  ]
+}

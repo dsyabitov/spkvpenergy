@@ -1,0 +1,17 @@
+.events-container {
+    display: flex;
+    width: 100vw;
+    justify-content: center;
+}
+
+.carousel {
+    width: 800px;
+}
+
+.events-nav-button {
+    margin-top: 120px;
+}
+
+.CarouselItem {
+    margin: 12px;
+}

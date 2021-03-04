@@ -1,0 +1,34 @@
+.infopanel-card {
+    display: flex;
+    padding: 12px;
+    min-width: 400px;
+    margin-top: 12px;
+    margin-left: 12px;
+    margin-bottom: 0px;
+}
+
+.infopanel-media {
+    width: 136px;
+    height: 136px;
+}
+
+.infopanel-media-large {
+    width: 176px;
+    height: 176px;
+}
+
+.infopanel-content {
+    flex: 1 1 auto;
+    flex-direction: column;
+    white-space: nowrap;
+}
+
+.infopanel-content-row {
+    flex: 1 1 auto;
+    flex-direction: row;
+    white-space: nowrap;
+}
+
+.infopanel-header {
+}
+

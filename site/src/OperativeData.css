@@ -1,0 +1,19 @@
+.operative-data {
+    display: flex;
+    flex-direction: column;
+}
+
+.operative-data-row-0 {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 12px;
+}
+
+.operative-data-row-1 {
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}

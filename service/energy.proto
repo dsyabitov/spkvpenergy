@@ -1,0 +1,70 @@
+syntax = "proto3";
+package service;
+option go_package = "ru.spkvp.energy/service";
+
+service Energy {
+    rpc Ping (StringRequest) returns (StringResponse);
+    rpc ChartData (ChartDataRequest) returns (ChartDataResponse);
+    rpc Events(EventsRequest) returns (EventsResponse);
+    rpc LastData(StringRequest) returns (stream LastDataResponse);
+}
+
+message StringRequest {
+    string message = 1;
+}
+
+message StringResponse {
+    string message = 1;
+}
+
+message ChartDataRequest {
+    int64 start = 1;
+    int64 end = 2;
+    int64 step = 3;
+}
+
+message ChartDataResponse {
+    repeated ChartSeriesData series = 1;
+}
+
+message ChartSeriesData {
+    string name = 1;
+    repeated SeriesValues values = 2;
+}
+
+message SeriesValues {
+    int64 x = 1;
+    double y = 2;
+}
+
+message EventsRequest {
+    int64 count = 1;
+    int64 forward = 2;
+    int64 backward = 3;
+}
+
+message EventsResponse {
+    repeated Event Events = 1;
+    int64 lastDate = 2;
+    int64 firstDate = 3;
+    bool haveMore = 4;
+}
+
+message Event {
+    int64 start = 1;
+    int64 end = 2;
+    string name = 3;
+    string params = 4;
+}
+
+message LastDataResponse {
+    repeated LastData lastData = 1;
+    int64 dataTime = 2;
+    bool online = 3;
+    bool alarm = 4;
+}
+
+message LastData {
+    string paramName = 1;
+    string value = 2;
+}

@@ -1,0 +1,903 @@
+---
+swagger: "2.0"
+info:
+  description: "Api to communicate with OwenCloud service"
+  version: "1.0.0"
+  title: "OwenCloud Api"
+host: "api.owencloud.ru"
+basePath: "/v1"
+schemes:
+- "https"
+security:
+- principal: []
+paths:
+  /auth/open:
+    post:
+      description: "Auth users"
+      operationId: "auth"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/authOpen"
+        x-exportParamName: "Body"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/authResp"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/errorModel"
+  /device/index:
+    post:
+      description: "Device index"
+      operationId: "deviceIndex"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/deviceIndexRequest"
+          x-exportParamName: "Body"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/deviceIndexResponse"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/errorModel"
+
+  /device/{id}:
+    get:
+      description: "Return Device"
+      operationId: "findDeviceById"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "id"
+        description: "DeviceID for fetch"
+        required: true
+        type: "integer"
+        format: "int32"
+      responses:
+        200:
+          description: "device response"
+          schema:
+            "$ref": "#/definitions/device"
+        default:
+          description: "unexpected error"
+          schema:
+            "$ref": "#/definitions/errorModel"
+
+  /parameters/last-data:
+    get:
+      description: "Return last parameters data"
+      operationId: "getLastParametersData"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "body"
+        in: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/idList"
+      responses:
+        200:
+          description: "Parameters last data from storage"
+          schema:
+            $ref: "#/definitions/lastData"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/errorModel"
+
+  /company/events-list:
+    get:
+      description: "Return events data by Company"
+      operationId: "getCompanyEvents"
+      produces:
+      -  "application/json"
+      parameters:
+      - name: "body"
+        in: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/getCompanyEventsReq"
+      responses:
+        200:
+          description: "Events for all company devices"
+          schema:
+            $ref: "#/definitions/deviceEvents"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/errorModel"
+  /device/events-log/{id}:
+    post:
+      description: "Get device events log"
+      operationId: "eventLog"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "id"
+          description: "DeviceID for fetch"
+          required: true
+          type: "integer"
+          format: "int32"
+        - name: "body"
+          in: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/eventLogReq"
+      responses:
+        200:
+          description: "Events for all company devices"
+          schema:
+            $ref: "#/definitions/eventLogResp"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/errorModel"
+
+  /event/list-by-device:
+    post:
+      description: "Get events list by device"
+      operationId: "eventListByDevice"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "body"
+          in: "body"
+          description: "Parameters"
+          required: true
+          schema:
+            $ref: "#/definitions/eventsListByDeviceReq"
+      responses:
+        200:
+          description: "events response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/deviceEvent"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/errorModel"
+
+  /event/list:
+    post:
+      description: "Get company events"
+      operationId: "eventList"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "body"
+        in: "body"
+        description: "Parameters"
+        required: true
+        schema:
+          properties:
+            status:
+              type: "integer"
+              format: "int32"
+            is_critical:
+              type: "integer"
+              format: "int32"
+            is_active:
+              type: "integer"
+              format: "int32"
+      responses:
+        200:
+          description: "events response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/deviceEvent"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/errorModel"
+
+  /parameters/data:
+    post:
+      description: "Get parameter values"
+      operationId: "parametersData"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "body"
+          in: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/parametersDataReq"
+      responses:
+        200:
+          description: "parameters/data response"
+          schema:
+            type: "object"
+            $ref: "#/definitions/parametersDataResp"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/errorModel"
+
+  /device-management/types-info:
+    post:
+      description: "Get device types"
+      operationId: "deviceTypesInfo"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          required: true
+          schema:
+            type: "array"
+            items:
+              type: "integer"
+      responses:
+        200:
+          description: "device types response"
+          schema:
+            type: "object"
+            $ref: "#/definitions/deviceTypesResponse"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/errorModel"
+  /device/events-log-backward/{id}:
+    post:
+      description: "Get device events log backward"
+      operationId: "eventLogBackward"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "id"
+          description: "DeviceID for fetch"
+          required: true
+          type: "integer"
+          format: "int32"
+        - name: "body"
+          in: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/eventLogBackwardReq"
+      responses:
+        200:
+          description: "Events for all company devices"
+          schema:
+            $ref: "#/definitions/eventLogResp"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/errorModel"
+
+  /device/events-log-forward/{id}:
+    post:
+      description: "Get device events log forward"
+      operationId: "eventLogForward"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "id"
+          description: "DeviceID for fetch"
+          required: true
+          type: "integer"
+          format: "int32"
+        - name: "body"
+          in: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/eventLogForwardReq"
+      responses:
+        200:
+          description: "Events for all company devices"
+          schema:
+            $ref: "#/definitions/eventLogResp"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/errorModel"
+
+
+
+securityDefinitions:
+  principal:
+    type: "apiKey"
+    name: "token"
+    in: "header"
+
+definitions:
+  authOpen:
+    type: "object"
+    required:
+    - "login"
+    - "password"
+    properties:
+      login:
+        type: "string"
+      password:
+        type: "string"
+  errorModel:
+    type: "object"
+    required:
+    - "code"
+    - "message"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      message:
+        type: "string"
+  okModel:
+    required:
+    - "code"
+    - "message"
+    properties:
+        code:
+          type: "integer"
+          format: "int32"
+        message:
+          type: "string"
+  authResp:
+    properties:
+      name:
+        type: "string"
+      token:
+        type: "string"
+    example:
+      name: "name"
+      token: "token"
+  device:
+    required:
+    - id
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+      data_fetcher_id:
+        type: "integer"
+        format: "int32"
+      device_type_id:
+        type: "integer"
+        format: "int32"
+      device_type_name":
+        type: "string"
+      device_type_protocol:
+        type: "string"
+      protocol:
+        type: "string"
+      allow_packet_read:
+        type: "integer"
+        format: "int32"
+      name:
+        type: "string"
+      password:
+        type: "string"
+      operative_period:
+        type: "integer"
+        format: "int32"
+      configuration_period:
+        type: "integer"
+        format: "int32"
+      manageable_period:
+        type: "integer"
+        format: "int32"
+      address":
+        type: "integer"
+        format: "int32"
+      serial_speed:
+        type: "integer"
+        format: "int32"
+      serial_rts:
+        type: "integer"
+        format: "int32"
+      serial_setup:
+        type: "string"
+      overall_timeout:
+        type: "integer"
+        format: "uint16"
+      symbol_timeout:
+        type: "integer"
+        format: "uint16"
+      identifier:
+        type: "string"
+      offline_period:
+        type: "integer"
+        format: "int32"
+      time_zone":
+        type: "string"
+      parameter_categories:
+        type: "array"
+        items:
+          $ref: "#/definitions/paramCategory"
+      parameters:
+        type: "array"
+        items:
+          $ref: "#/definitions/deviceParam"
+      last_dt:
+        type: "string"
+      first_dt:
+        type: "integer"
+        format: "int"
+      lastOperative_dt:
+        type: "string"
+      lastConfiguration_dt:
+        type: "string"
+      lastManagable_dt:
+        type: "string"
+
+  paramCategory:
+    required:
+    - id
+    - parent_id
+    - device_id
+    - name
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+      parent_id:
+        type: "integer"
+        format: "int32"
+      device_id:
+        type: "integer"
+        format: "int32"
+      name:
+        type: "string"
+      tag:
+        type: "string"
+
+
+  deviceParam:
+    required:
+    - id
+    - code
+    - name
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+      code:
+        type: "string"
+      name:
+        type: "string"
+      min_val:
+        type: "string"
+      max_val:
+        type: "string"
+      value:
+        type: "string"
+      precision:
+        type: "integer"
+        format: "int32"
+        x-nullable": true
+      bitmask_enabled:
+        type: "integer"
+        format: "int32"
+      bitmask_value:
+        type: "string"
+      category_id:
+        type: "integer"
+        format: "int32"
+      function:
+        type: "integer"
+        format: "int32"
+      type:
+        type: "integer"
+        format: "int32"
+      hash:
+        type: "string"
+      index:
+        type: "integer"
+        format: "int32"
+      address:
+        type: "string"
+      format:
+        type: "integer"
+        format: "int32"
+      length_in_device:
+        type: "integer"
+        format: "int32"
+      modbus_format:
+        type: "integer"
+        format: "int32"
+      register_byte_order:
+        type: "integer"
+        format: "int32"
+      register_order:
+        type: "integer"
+        format: "int32"
+      is_writable:
+        type: "integer"
+        format: "int32"
+      write_function:
+        type: "integer"
+        format: "int32"
+      can_configuration:
+        type: "integer"
+        format: "int32"
+      in_configuration:
+        type: "integer"
+        format: "int32"
+      can_operative:
+        type: "integer"
+        format: "int32"
+      in_operative:
+        type: "integer"
+        format: "int32"
+      can_manageable:
+        type: "integer"
+        format: "int32"
+      in_manageable:
+        type: "integer"
+        format: "int32"
+      in_parameters:
+        type: "integer"
+        format: "int32"
+      in_tables:
+        type: "integer"
+        format: "int32"
+      in_graphs:
+        type: "integer"
+        format: "int32"
+      in_events:
+        type: "integer"
+        format: "int32"
+      measurement:
+        $ref: "#/definitions/measurement"
+
+  measurement:
+    properties:
+      title:
+        type: "string"
+      name:
+        type: "string"
+      default_precision:
+        type: "integer"
+        format: "int32"
+      visible:
+        type: "integer"
+        format: "int32"
+
+  idList:
+    properties:
+      language:
+        type: "string"
+      ids:
+        type: "array"
+        items:
+          type: "integer"
+
+  parameterValue:
+    properties:
+      d:
+        type: "integer"
+      v:
+        type: "string"
+      e:
+        type: "string"
+      f:
+        type: "string"
+
+  parameterValues:
+    properties:
+      id:
+        type: "integer"
+      values:
+        type: "array"
+        items:
+          $ref: "#/definitions/parameterValue"
+
+  lastData:
+    type: "array"
+    items:
+      $ref: "#/definitions/parameterValues"
+
+  getCompanyEventsReq:
+    properties:
+      status:
+        type: "integer"
+      is_critical:
+        type: "integer"
+      is_active:
+        type: "integer"
+
+  deviceEvent:
+    properties:
+      id:
+        type: "integer"
+      expression:
+        type: "string"
+      condition_time:
+        type: "integer"
+      is_active:
+        type: "integer"
+      status:
+        type: "integer"
+      type:
+        type: "integer"
+      is_critical:
+        type: "integer"
+      category_id:
+        type: "integer"
+      allow_change_activity:
+        type: "integer"
+      last_update:
+        type: "integer"
+        format: "int64"
+      uuid:
+        type: "string"
+      is_old:
+        type: "integer"
+      last_log_id:
+        type: "integer"
+      message:
+        type: "string"
+      email_notification:
+        type: "string"
+      sms_notification:
+        type: "string"
+      params:
+        type: "array"
+        items:
+          properties:
+            id:
+              type: "integer"
+            parameter_id:
+              type: "integer"
+            code:
+              type: "string"
+            index:
+              type: "integer"
+            precision:
+              type: "integer"
+  deviceEvents:
+    type: "array"
+    items:
+      $ref: "#/definitions/deviceEvent"
+
+  eventLogReq:
+    type: "object"
+    required:
+      - start
+      - end
+    properties:
+      start:
+        type: "string"
+      end:
+        type: "string"
+      is_read:
+        type: "integer"
+      event_ids:
+        type: "array"
+        items:
+          type: "integer"
+
+  eventLogForwardReq:
+    type: "object"
+    required:
+      - start
+      - limit
+    properties:
+      start:
+        type: "string"
+      limit:
+        type: "integer"
+      is_read:
+        type: "integer"
+        x-nullable: true
+      event_ids:
+        type: "array"
+        x-nullable: true
+        items:
+          type: "integer"
+
+  eventLogBackwardReq:
+    type: "object"
+    required:
+      - end
+      - limit
+    properties:
+      end:
+        type: "string"
+      limit:
+        type: "integer"
+      is_read:
+        type: "integer"
+        x-nullable: true
+      event_ids:
+        type: "array"
+        x-nullable: true
+        items:
+          type: "integer"
+
+  eventLogResp:
+    type: "array"
+    items:
+      $ref: "#/definitions/eventLogEntry"
+
+  eventLogEntry:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      event_id:
+        type: "integer"
+      start_dt:
+        type: "integer"
+        format: "int64"
+      end_dt:
+        type: "integer"
+        format: "int64"
+      read_dt:
+        type: "integer"
+        format: "int64"
+      read_by_user:
+        type: "string"
+      message:
+        type: "string"
+      device_id:
+        type: "integer"
+      is_critical:
+        type: "integer"
+      type:
+        type: "integer"
+      data:
+        type: "array"
+        items:
+          type: "object"
+          $ref: "#/definitions/eventParamValue"
+  eventParamValue:
+    type: object
+    properties:
+      id:
+        type: "integer"
+      v:
+        type: "string"
+      f:
+        type: "string"
+
+  parametersDataReq:
+    type: object
+    properties:
+      start:
+        type: "string"
+      end:
+        type: "string"
+      step:
+        type: "integer"
+      ids:
+        type: "array"
+        items:
+          type: "integer"
+
+  parametersDataResp:
+    type: "array"
+    items:
+      type: "object"
+      $ref: "#/definitions/parameterDataItem"
+
+  parameterDataItem:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      values:
+        type: "array"
+        items:
+          type: "object"
+          $ref: "#/definitions/parameterDataValue"
+
+  parameterDataValue:
+    type: "object"
+    properties:
+      d:
+        type: "integer"
+        format: "int64"
+      v:
+        type: "string"
+      e:
+        type: "string"
+      f:
+        type: "string"
+
+  deviceTypesResponse:
+    type: "array"
+    items:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+        tag:
+          type: "string"
+        group_type:
+          type: "string"
+        name:
+          type: "string"
+
+  eventsListByDeviceReq:
+    type: "object"
+    properties:
+      device_ids:
+        type: "array"
+        items:
+          type: "integer"
+      status:
+        type: "integer"
+        x-nullable: true
+      is_critical:
+        type: "integer"
+        x-nullable: true
+      is_active:
+        type: "integer"
+        x-nullable: true
+
+  deviceIndexRequest:
+    type: "object"
+    properties:
+      device_ids:
+        type: "array"
+        x-nullable: true
+        items:
+          type: "integer"
+      filter:
+        type: "string"
+        x-nullable: true
+      company_id:
+        type: "integer"
+        x-nullable: true
+
+  deviceIndexResponse:
+    type: "array"
+    items:
+      $ref: "#/definitions/deviceIndexItem"
+
+  deviceIndexItem:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      name:
+        type: "string"
+      identifier:
+        type: "string"
+      type:
+        type: "string"
+      is_favourite:
+        type: "boolean"
+      categories:
+        type: "array"
+        items:
+          type: "integer"
+      last_dt:
+        type: "string"
+      lastOperative_dt:
+        type: "string"
+      lastConfiguration_dt:
+        type: "string"
+      lastManageable_dt:
+        type: "string"
+      is_online:
+        type: "boolean"
+      has_alarm:
+        type: "boolean"
+      has_unread:
+        type: "boolean"
+      status:
+        type: "string"
+      time_zone:
+        type: "string"
