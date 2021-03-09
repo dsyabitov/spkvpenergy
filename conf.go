@@ -7,13 +7,13 @@ import (
 )
 
 type Conf struct {
-	Login string `json:"login"`
-	Password string `json:"password"`
-	MaxConn int `json:"max_connections"`
-	LogLevel string `json:"log_level"`
+	Login           string   `json:"login"`
+	Password        string   `json:"password"`
+	MaxConn         int      `json:"max_connections"`
+	LogLevel        string   `json:"log_level"`
 	OperativeParams []string `json:"operative_params"`
-	DeviceId int32 `json:"device_id"`
-	Port int32 `json:"port"`
+	DeviceId        int32    `json:"device_id"`
+	Port            int32    `json:"port"`
 }
 
 func NewConfig(filename string) (res Conf, err error) {
@@ -40,4 +40,3 @@ func NewConfig(filename string) (res Conf, err error) {
 	}
 	return
 }
-

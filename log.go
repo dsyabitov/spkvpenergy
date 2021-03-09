@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-func configureLogger (conf Conf) error  {
+func configureLogger(conf Conf) error {
 	levelEnc := zapcore.CapitalColorLevelEncoder
 
 	encCfg := zapcore.EncoderConfig{
@@ -31,13 +31,17 @@ func configureLogger (conf Conf) error  {
 
 	var level zap.AtomicLevel
 	switch strings.ToLower(conf.LogLevel) {
-	case "info": level = zap.NewAtomicLevelAt(zapcore.InfoLevel)
+	case "info":
+		level = zap.NewAtomicLevelAt(zapcore.InfoLevel)
 		break
-	case "debug": level = zap.NewAtomicLevelAt(zapcore.DebugLevel)
+	case "debug":
+		level = zap.NewAtomicLevelAt(zapcore.DebugLevel)
 		break
-	case "warn": level = zap.NewAtomicLevelAt(zapcore.WarnLevel)
+	case "warn":
+		level = zap.NewAtomicLevelAt(zapcore.WarnLevel)
 		break
-	case "error": level = zap.NewAtomicLevelAt(zapcore.ErrorLevel)
+	case "error":
+		level = zap.NewAtomicLevelAt(zapcore.ErrorLevel)
 		break
 	default:
 		return errors.New("unknown log level")

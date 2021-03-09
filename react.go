@@ -31,4 +31,3 @@ func (h ReactHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	http.FileServer(http.Dir(h.staticPath)).ServeHTTP(w, r)
 }
-
