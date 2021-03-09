@@ -1,6 +1,6 @@
 syntax = "proto3";
 package service;
-option go_package = "ru.spkvp.energy/service";
+option go_package = "spkvpenergy/service";
 
 service Energy {
     rpc Ping (StringRequest) returns (StringResponse);

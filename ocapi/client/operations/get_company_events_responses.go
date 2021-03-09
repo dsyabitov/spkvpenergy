@@ -10,10 +10,9 @@ import (
 	"io"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
-
-	models "spkvpenergy/ocapi/models"
+	"spkvpenergy/ocapi/models"
 )
 
 // GetCompanyEventsReader is a Reader for the GetCompanyEvents structure.
@@ -47,7 +46,7 @@ func NewGetCompanyEventsOK() *GetCompanyEventsOK {
 	return &GetCompanyEventsOK{}
 }
 
-/*GetCompanyEventsOK handles this case with default header values.
+/* GetCompanyEventsOK describes a response with status code 200, with default header values.
 
 Events for all company devices
 */
@@ -58,7 +57,6 @@ type GetCompanyEventsOK struct {
 func (o *GetCompanyEventsOK) Error() string {
 	return fmt.Sprintf("[GET /company/events-list][%d] getCompanyEventsOK  %+v", 200, o.Payload)
 }
-
 func (o *GetCompanyEventsOK) GetPayload() models.DeviceEvents {
 	return o.Payload
 }
@@ -80,7 +78,7 @@ func NewGetCompanyEventsDefault(code int) *GetCompanyEventsDefault {
 	}
 }
 
-/*GetCompanyEventsDefault handles this case with default header values.
+/* GetCompanyEventsDefault describes a response with status code -1, with default header values.
 
 unexpected error
 */
@@ -98,7 +96,6 @@ func (o *GetCompanyEventsDefault) Code() int {
 func (o *GetCompanyEventsDefault) Error() string {
 	return fmt.Sprintf("[GET /company/events-list][%d] getCompanyEvents default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *GetCompanyEventsDefault) GetPayload() *models.ErrorModel {
 	return o.Payload
 }

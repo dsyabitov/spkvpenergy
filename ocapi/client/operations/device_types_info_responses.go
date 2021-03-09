@@ -10,10 +10,9 @@ import (
 	"io"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
-
-	models "spkvpenergy/ocapi/models"
+	"spkvpenergy/ocapi/models"
 )
 
 // DeviceTypesInfoReader is a Reader for the DeviceTypesInfo structure.
@@ -47,7 +46,7 @@ func NewDeviceTypesInfoOK() *DeviceTypesInfoOK {
 	return &DeviceTypesInfoOK{}
 }
 
-/*DeviceTypesInfoOK handles this case with default header values.
+/* DeviceTypesInfoOK describes a response with status code 200, with default header values.
 
 device types response
 */
@@ -58,7 +57,6 @@ type DeviceTypesInfoOK struct {
 func (o *DeviceTypesInfoOK) Error() string {
 	return fmt.Sprintf("[POST /device-management/types-info][%d] deviceTypesInfoOK  %+v", 200, o.Payload)
 }
-
 func (o *DeviceTypesInfoOK) GetPayload() models.DeviceTypesResponse {
 	return o.Payload
 }
@@ -80,7 +78,7 @@ func NewDeviceTypesInfoDefault(code int) *DeviceTypesInfoDefault {
 	}
 }
 
-/*DeviceTypesInfoDefault handles this case with default header values.
+/* DeviceTypesInfoDefault describes a response with status code -1, with default header values.
 
 unexpected error
 */
@@ -98,7 +96,6 @@ func (o *DeviceTypesInfoDefault) Code() int {
 func (o *DeviceTypesInfoDefault) Error() string {
 	return fmt.Sprintf("[POST /device-management/types-info][%d] deviceTypesInfo default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *DeviceTypesInfoDefault) GetPayload() *models.ErrorModel {
 	return o.Payload
 }

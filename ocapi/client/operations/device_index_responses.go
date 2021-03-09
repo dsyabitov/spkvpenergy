@@ -10,10 +10,9 @@ import (
 	"io"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
-
-	models "spkvpenergy/ocapi/models"
+	"spkvpenergy/ocapi/models"
 )
 
 // DeviceIndexReader is a Reader for the DeviceIndex structure.
@@ -47,7 +46,7 @@ func NewDeviceIndexOK() *DeviceIndexOK {
 	return &DeviceIndexOK{}
 }
 
-/*DeviceIndexOK handles this case with default header values.
+/* DeviceIndexOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -58,7 +57,6 @@ type DeviceIndexOK struct {
 func (o *DeviceIndexOK) Error() string {
 	return fmt.Sprintf("[POST /device/index][%d] deviceIndexOK  %+v", 200, o.Payload)
 }
-
 func (o *DeviceIndexOK) GetPayload() models.DeviceIndexResponse {
 	return o.Payload
 }
@@ -80,7 +78,7 @@ func NewDeviceIndexDefault(code int) *DeviceIndexDefault {
 	}
 }
 
-/*DeviceIndexDefault handles this case with default header values.
+/* DeviceIndexDefault describes a response with status code -1, with default header values.
 
 unexpected error
 */
@@ -98,7 +96,6 @@ func (o *DeviceIndexDefault) Code() int {
 func (o *DeviceIndexDefault) Error() string {
 	return fmt.Sprintf("[POST /device/index][%d] deviceIndex default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *DeviceIndexDefault) GetPayload() *models.ErrorModel {
 	return o.Payload
 }

@@ -13,63 +13,76 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	cr "github.com/go-openapi/runtime/client"
-
-	strfmt "github.com/go-openapi/strfmt"
+	"github.com/go-openapi/strfmt"
 )
 
-// NewEventListParams creates a new EventListParams object
-// with the default values initialized.
+// NewEventListParams creates a new EventListParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewEventListParams() *EventListParams {
-	var ()
 	return &EventListParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewEventListParamsWithTimeout creates a new EventListParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewEventListParamsWithTimeout(timeout time.Duration) *EventListParams {
-	var ()
 	return &EventListParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewEventListParamsWithContext creates a new EventListParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewEventListParamsWithContext(ctx context.Context) *EventListParams {
-	var ()
 	return &EventListParams{
-
 		Context: ctx,
 	}
 }
 
 // NewEventListParamsWithHTTPClient creates a new EventListParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewEventListParamsWithHTTPClient(client *http.Client) *EventListParams {
-	var ()
 	return &EventListParams{
 		HTTPClient: client,
 	}
 }
 
-/*EventListParams contains all the parameters to send to the API endpoint
-for the event list operation typically these are written to a http.Request
+/* EventListParams contains all the parameters to send to the API endpoint
+   for the event list operation.
+
+   Typically these are written to a http.Request.
 */
 type EventListParams struct {
 
-	/*Body
-	  Parameters
+	/* Body.
 
+	   Parameters
 	*/
 	Body EventListBody
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the event list params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *EventListParams) WithDefaults() *EventListParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the event list params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *EventListParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the event list params
@@ -123,7 +136,6 @@ func (o *EventListParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Reg
 		return err
 	}
 	var res []error
-
 	if err := r.SetBodyParam(o.Body); err != nil {
 		return err
 	}

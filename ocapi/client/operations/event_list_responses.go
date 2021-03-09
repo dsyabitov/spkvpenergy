@@ -6,15 +6,15 @@ package operations
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"fmt"
 	"io"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 
-	strfmt "github.com/go-openapi/strfmt"
-
-	models "spkvpenergy/ocapi/models"
+	"spkvpenergy/ocapi/models"
 )
 
 // EventListReader is a Reader for the EventList structure.
@@ -48,7 +48,7 @@ func NewEventListOK() *EventListOK {
 	return &EventListOK{}
 }
 
-/*EventListOK handles this case with default header values.
+/* EventListOK describes a response with status code 200, with default header values.
 
 events response
 */
@@ -59,7 +59,6 @@ type EventListOK struct {
 func (o *EventListOK) Error() string {
 	return fmt.Sprintf("[POST /event/list][%d] eventListOK  %+v", 200, o.Payload)
 }
-
 func (o *EventListOK) GetPayload() []*models.DeviceEvent {
 	return o.Payload
 }
@@ -81,7 +80,7 @@ func NewEventListDefault(code int) *EventListDefault {
 	}
 }
 
-/*EventListDefault handles this case with default header values.
+/* EventListDefault describes a response with status code -1, with default header values.
 
 unexpected error
 */
@@ -99,7 +98,6 @@ func (o *EventListDefault) Code() int {
 func (o *EventListDefault) Error() string {
 	return fmt.Sprintf("[POST /event/list][%d] eventList default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *EventListDefault) GetPayload() *models.ErrorModel {
 	return o.Payload
 }
@@ -133,6 +131,11 @@ type EventListBody struct {
 
 // Validate validates this event list body
 func (o *EventListBody) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this event list body based on context it is used
+func (o *EventListBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 

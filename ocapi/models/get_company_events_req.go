@@ -6,12 +6,14 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
+	"context"
 
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // GetCompanyEventsReq get company events req
+//
 // swagger:model getCompanyEventsReq
 type GetCompanyEventsReq struct {
 
@@ -27,6 +29,11 @@ type GetCompanyEventsReq struct {
 
 // Validate validates this get company events req
 func (m *GetCompanyEventsReq) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get company events req based on context it is used
+func (m *GetCompanyEventsReq) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 

@@ -6,15 +6,16 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // DeviceTypesResponse device types response
+//
 // swagger:model deviceTypesResponse
 type DeviceTypesResponse []*DeviceTypesResponseItems0
 
@@ -44,7 +45,31 @@ func (m DeviceTypesResponse) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
+// ContextValidate validate this device types response based on the context it is used
+func (m DeviceTypesResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	for i := 0; i < len(m); i++ {
+
+		if m[i] != nil {
+			if err := m[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName(strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
 // DeviceTypesResponseItems0 device types response items0
+//
 // swagger:model DeviceTypesResponseItems0
 type DeviceTypesResponseItems0 struct {
 
@@ -63,6 +88,11 @@ type DeviceTypesResponseItems0 struct {
 
 // Validate validates this device types response items0
 func (m *DeviceTypesResponseItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this device types response items0 based on context it is used
+func (m *DeviceTypesResponseItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 

@@ -10,10 +10,9 @@ import (
 	"io"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
-
-	models "spkvpenergy/ocapi/models"
+	"spkvpenergy/ocapi/models"
 )
 
 // GetLastParametersDataReader is a Reader for the GetLastParametersData structure.
@@ -47,7 +46,7 @@ func NewGetLastParametersDataOK() *GetLastParametersDataOK {
 	return &GetLastParametersDataOK{}
 }
 
-/*GetLastParametersDataOK handles this case with default header values.
+/* GetLastParametersDataOK describes a response with status code 200, with default header values.
 
 Parameters last data from storage
 */
@@ -58,7 +57,6 @@ type GetLastParametersDataOK struct {
 func (o *GetLastParametersDataOK) Error() string {
 	return fmt.Sprintf("[GET /parameters/last-data][%d] getLastParametersDataOK  %+v", 200, o.Payload)
 }
-
 func (o *GetLastParametersDataOK) GetPayload() models.LastData {
 	return o.Payload
 }
@@ -80,7 +78,7 @@ func NewGetLastParametersDataDefault(code int) *GetLastParametersDataDefault {
 	}
 }
 
-/*GetLastParametersDataDefault handles this case with default header values.
+/* GetLastParametersDataDefault describes a response with status code -1, with default header values.
 
 unexpected error
 */
@@ -98,7 +96,6 @@ func (o *GetLastParametersDataDefault) Code() int {
 func (o *GetLastParametersDataDefault) Error() string {
 	return fmt.Sprintf("[GET /parameters/last-data][%d] getLastParametersData default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *GetLastParametersDataDefault) GetPayload() *models.ErrorModel {
 	return o.Payload
 }

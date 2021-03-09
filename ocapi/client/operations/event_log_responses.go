@@ -10,10 +10,9 @@ import (
 	"io"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
-
-	models "spkvpenergy/ocapi/models"
+	"spkvpenergy/ocapi/models"
 )
 
 // EventLogReader is a Reader for the EventLog structure.
@@ -47,7 +46,7 @@ func NewEventLogOK() *EventLogOK {
 	return &EventLogOK{}
 }
 
-/*EventLogOK handles this case with default header values.
+/* EventLogOK describes a response with status code 200, with default header values.
 
 Events for all company devices
 */
@@ -58,7 +57,6 @@ type EventLogOK struct {
 func (o *EventLogOK) Error() string {
 	return fmt.Sprintf("[POST /device/events-log/{id}][%d] eventLogOK  %+v", 200, o.Payload)
 }
-
 func (o *EventLogOK) GetPayload() models.EventLogResp {
 	return o.Payload
 }
@@ -80,7 +78,7 @@ func NewEventLogDefault(code int) *EventLogDefault {
 	}
 }
 
-/*EventLogDefault handles this case with default header values.
+/* EventLogDefault describes a response with status code -1, with default header values.
 
 unexpected error
 */
@@ -98,7 +96,6 @@ func (o *EventLogDefault) Code() int {
 func (o *EventLogDefault) Error() string {
 	return fmt.Sprintf("[POST /device/events-log/{id}][%d] eventLog default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *EventLogDefault) GetPayload() *models.ErrorModel {
 	return o.Payload
 }

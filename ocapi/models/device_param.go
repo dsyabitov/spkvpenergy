@@ -6,14 +6,16 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
+	"context"
 
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
 
 // DeviceParam device param
+//
 // swagger:model deviceParam
 type DeviceParam struct {
 
@@ -165,7 +167,6 @@ func (m *DeviceParam) validateID(formats strfmt.Registry) error {
 }
 
 func (m *DeviceParam) validateMeasurement(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Measurement) { // not required
 		return nil
 	}
@@ -186,6 +187,34 @@ func (m *DeviceParam) validateName(formats strfmt.Registry) error {
 
 	if err := validate.Required("name", "body", m.Name); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this device param based on the context it is used
+func (m *DeviceParam) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateMeasurement(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *DeviceParam) contextValidateMeasurement(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Measurement != nil {
+		if err := m.Measurement.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("measurement")
+			}
+			return err
+		}
 	}
 
 	return nil

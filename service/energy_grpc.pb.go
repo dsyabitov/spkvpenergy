@@ -233,5 +233,5 @@ var Energy_ServiceDesc = grpc.ServiceDesc{
 			ServerStreams: true,
 		},
 	},
-	Metadata: "service/energy.proto",
+	Metadata: "spkvpenergy/service/energy.proto",
 }

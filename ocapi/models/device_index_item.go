@@ -6,12 +6,14 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
+	"context"
 
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // DeviceIndexItem device index item
+//
 // swagger:model deviceIndexItem
 type DeviceIndexItem struct {
 
@@ -63,6 +65,11 @@ type DeviceIndexItem struct {
 
 // Validate validates this device index item
 func (m *DeviceIndexItem) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this device index item based on context it is used
+func (m *DeviceIndexItem) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 

@@ -6,12 +6,15 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
+	"context"
 
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // AuthResp auth resp
+// Example: {"name":"name","token":"token"}
+//
 // swagger:model authResp
 type AuthResp struct {
 
@@ -24,6 +27,11 @@ type AuthResp struct {
 
 // Validate validates this auth resp
 func (m *AuthResp) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this auth resp based on context it is used
+func (m *AuthResp) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 

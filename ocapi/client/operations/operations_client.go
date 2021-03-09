@@ -7,12 +7,11 @@ package operations
 
 import (
 	"github.com/go-openapi/runtime"
-
-	strfmt "github.com/go-openapi/strfmt"
+	"github.com/go-openapi/strfmt"
 )
 
 // New creates a new operations API client.
-func New(transport runtime.ClientTransport, formats strfmt.Registry) *Client {
+func New(transport runtime.ClientTransport, formats strfmt.Registry) ClientService {
 	return &Client{transport: transport, formats: formats}
 }
 
@@ -24,28 +23,64 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
+// ClientService is the interface for Client methods
+type ClientService interface {
+	Auth(params *AuthParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*AuthOK, error)
+
+	DeviceIndex(params *DeviceIndexParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeviceIndexOK, error)
+
+	DeviceTypesInfo(params *DeviceTypesInfoParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeviceTypesInfoOK, error)
+
+	EventList(params *EventListParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*EventListOK, error)
+
+	EventListByDevice(params *EventListByDeviceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*EventListByDeviceOK, error)
+
+	EventLog(params *EventLogParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*EventLogOK, error)
+
+	EventLogBackward(params *EventLogBackwardParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*EventLogBackwardOK, error)
+
+	EventLogForward(params *EventLogForwardParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*EventLogForwardOK, error)
+
+	FindDeviceByID(params *FindDeviceByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*FindDeviceByIDOK, error)
+
+	GetCompanyEvents(params *GetCompanyEventsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetCompanyEventsOK, error)
+
+	GetLastParametersData(params *GetLastParametersDataParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetLastParametersDataOK, error)
+
+	ParametersData(params *ParametersDataParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ParametersDataOK, error)
+
+	SetTransport(transport runtime.ClientTransport)
+}
+
 /*
-Auth Auth users
+  Auth Auth users
 */
-func (a *Client) Auth(params *AuthParams, authInfo runtime.ClientAuthInfoWriter) (*AuthOK, error) {
+func (a *Client) Auth(params *AuthParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*AuthOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewAuthParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "auth",
 		Method:             "POST",
 		PathPattern:        "/auth/open",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &AuthReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -59,27 +94,31 @@ func (a *Client) Auth(params *AuthParams, authInfo runtime.ClientAuthInfoWriter)
 }
 
 /*
-DeviceIndex Device index
+  DeviceIndex Device index
 */
-func (a *Client) DeviceIndex(params *DeviceIndexParams, authInfo runtime.ClientAuthInfoWriter) (*DeviceIndexOK, error) {
+func (a *Client) DeviceIndex(params *DeviceIndexParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeviceIndexOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeviceIndexParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "deviceIndex",
 		Method:             "POST",
 		PathPattern:        "/device/index",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &DeviceIndexReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -93,27 +132,31 @@ func (a *Client) DeviceIndex(params *DeviceIndexParams, authInfo runtime.ClientA
 }
 
 /*
-DeviceTypesInfo Get device types
+  DeviceTypesInfo Get device types
 */
-func (a *Client) DeviceTypesInfo(params *DeviceTypesInfoParams, authInfo runtime.ClientAuthInfoWriter) (*DeviceTypesInfoOK, error) {
+func (a *Client) DeviceTypesInfo(params *DeviceTypesInfoParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeviceTypesInfoOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeviceTypesInfoParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "deviceTypesInfo",
 		Method:             "POST",
 		PathPattern:        "/device-management/types-info",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &DeviceTypesInfoReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -127,27 +170,31 @@ func (a *Client) DeviceTypesInfo(params *DeviceTypesInfoParams, authInfo runtime
 }
 
 /*
-EventList Get company events
+  EventList Get company events
 */
-func (a *Client) EventList(params *EventListParams, authInfo runtime.ClientAuthInfoWriter) (*EventListOK, error) {
+func (a *Client) EventList(params *EventListParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*EventListOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewEventListParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "eventList",
 		Method:             "POST",
 		PathPattern:        "/event/list",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &EventListReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -161,27 +208,31 @@ func (a *Client) EventList(params *EventListParams, authInfo runtime.ClientAuthI
 }
 
 /*
-EventListByDevice Get events list by device
+  EventListByDevice Get events list by device
 */
-func (a *Client) EventListByDevice(params *EventListByDeviceParams, authInfo runtime.ClientAuthInfoWriter) (*EventListByDeviceOK, error) {
+func (a *Client) EventListByDevice(params *EventListByDeviceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*EventListByDeviceOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewEventListByDeviceParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "eventListByDevice",
 		Method:             "POST",
 		PathPattern:        "/event/list-by-device",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &EventListByDeviceReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -195,27 +246,31 @@ func (a *Client) EventListByDevice(params *EventListByDeviceParams, authInfo run
 }
 
 /*
-EventLog Get device events log
+  EventLog Get device events log
 */
-func (a *Client) EventLog(params *EventLogParams, authInfo runtime.ClientAuthInfoWriter) (*EventLogOK, error) {
+func (a *Client) EventLog(params *EventLogParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*EventLogOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewEventLogParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "eventLog",
 		Method:             "POST",
 		PathPattern:        "/device/events-log/{id}",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &EventLogReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -229,27 +284,31 @@ func (a *Client) EventLog(params *EventLogParams, authInfo runtime.ClientAuthInf
 }
 
 /*
-EventLogBackward Get device events log backward
+  EventLogBackward Get device events log backward
 */
-func (a *Client) EventLogBackward(params *EventLogBackwardParams, authInfo runtime.ClientAuthInfoWriter) (*EventLogBackwardOK, error) {
+func (a *Client) EventLogBackward(params *EventLogBackwardParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*EventLogBackwardOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewEventLogBackwardParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "eventLogBackward",
 		Method:             "POST",
 		PathPattern:        "/device/events-log-backward/{id}",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &EventLogBackwardReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -263,27 +322,31 @@ func (a *Client) EventLogBackward(params *EventLogBackwardParams, authInfo runti
 }
 
 /*
-EventLogForward Get device events log forward
+  EventLogForward Get device events log forward
 */
-func (a *Client) EventLogForward(params *EventLogForwardParams, authInfo runtime.ClientAuthInfoWriter) (*EventLogForwardOK, error) {
+func (a *Client) EventLogForward(params *EventLogForwardParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*EventLogForwardOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewEventLogForwardParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "eventLogForward",
 		Method:             "POST",
 		PathPattern:        "/device/events-log-forward/{id}",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &EventLogForwardReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -297,27 +360,31 @@ func (a *Client) EventLogForward(params *EventLogForwardParams, authInfo runtime
 }
 
 /*
-FindDeviceByID Return Device
+  FindDeviceByID Return Device
 */
-func (a *Client) FindDeviceByID(params *FindDeviceByIDParams, authInfo runtime.ClientAuthInfoWriter) (*FindDeviceByIDOK, error) {
+func (a *Client) FindDeviceByID(params *FindDeviceByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*FindDeviceByIDOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewFindDeviceByIDParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "findDeviceById",
 		Method:             "GET",
 		PathPattern:        "/device/{id}",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &FindDeviceByIDReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -331,27 +398,31 @@ func (a *Client) FindDeviceByID(params *FindDeviceByIDParams, authInfo runtime.C
 }
 
 /*
-GetCompanyEvents Return events data by Company
+  GetCompanyEvents Return events data by Company
 */
-func (a *Client) GetCompanyEvents(params *GetCompanyEventsParams, authInfo runtime.ClientAuthInfoWriter) (*GetCompanyEventsOK, error) {
+func (a *Client) GetCompanyEvents(params *GetCompanyEventsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetCompanyEventsOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetCompanyEventsParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "getCompanyEvents",
 		Method:             "GET",
 		PathPattern:        "/company/events-list",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &GetCompanyEventsReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -365,27 +436,31 @@ func (a *Client) GetCompanyEvents(params *GetCompanyEventsParams, authInfo runti
 }
 
 /*
-GetLastParametersData Return last parameters data
+  GetLastParametersData Return last parameters data
 */
-func (a *Client) GetLastParametersData(params *GetLastParametersDataParams, authInfo runtime.ClientAuthInfoWriter) (*GetLastParametersDataOK, error) {
+func (a *Client) GetLastParametersData(params *GetLastParametersDataParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetLastParametersDataOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetLastParametersDataParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "getLastParametersData",
 		Method:             "GET",
 		PathPattern:        "/parameters/last-data",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &GetLastParametersDataReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -399,27 +474,31 @@ func (a *Client) GetLastParametersData(params *GetLastParametersDataParams, auth
 }
 
 /*
-ParametersData Get parameter values
+  ParametersData Get parameter values
 */
-func (a *Client) ParametersData(params *ParametersDataParams, authInfo runtime.ClientAuthInfoWriter) (*ParametersDataOK, error) {
+func (a *Client) ParametersData(params *ParametersDataParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ParametersDataOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewParametersDataParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "parametersData",
 		Method:             "POST",
 		PathPattern:        "/parameters/data",
 		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{""},
+		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &ParametersDataReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}

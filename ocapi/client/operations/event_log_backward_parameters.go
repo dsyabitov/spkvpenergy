@@ -13,68 +13,84 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	cr "github.com/go-openapi/runtime/client"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 
-	strfmt "github.com/go-openapi/strfmt"
-
-	models "spkvpenergy/ocapi/models"
+	"spkvpenergy/ocapi/models"
 )
 
-// NewEventLogBackwardParams creates a new EventLogBackwardParams object
-// with the default values initialized.
+// NewEventLogBackwardParams creates a new EventLogBackwardParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewEventLogBackwardParams() *EventLogBackwardParams {
-	var ()
 	return &EventLogBackwardParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewEventLogBackwardParamsWithTimeout creates a new EventLogBackwardParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewEventLogBackwardParamsWithTimeout(timeout time.Duration) *EventLogBackwardParams {
-	var ()
 	return &EventLogBackwardParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewEventLogBackwardParamsWithContext creates a new EventLogBackwardParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewEventLogBackwardParamsWithContext(ctx context.Context) *EventLogBackwardParams {
-	var ()
 	return &EventLogBackwardParams{
-
 		Context: ctx,
 	}
 }
 
 // NewEventLogBackwardParamsWithHTTPClient creates a new EventLogBackwardParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewEventLogBackwardParamsWithHTTPClient(client *http.Client) *EventLogBackwardParams {
-	var ()
 	return &EventLogBackwardParams{
 		HTTPClient: client,
 	}
 }
 
-/*EventLogBackwardParams contains all the parameters to send to the API endpoint
-for the event log backward operation typically these are written to a http.Request
+/* EventLogBackwardParams contains all the parameters to send to the API endpoint
+   for the event log backward operation.
+
+   Typically these are written to a http.Request.
 */
 type EventLogBackwardParams struct {
 
-	/*Body*/
+	// Body.
 	Body *models.EventLogBackwardReq
-	/*ID
-	  DeviceID for fetch
 
+	/* ID.
+
+	   DeviceID for fetch
+
+	   Format: int32
 	*/
 	ID int32
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the event log backward params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *EventLogBackwardParams) WithDefaults() *EventLogBackwardParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the event log backward params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *EventLogBackwardParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the event log backward params
@@ -139,7 +155,6 @@ func (o *EventLogBackwardParams) WriteToRequest(r runtime.ClientRequest, reg str
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

@@ -6,21 +6,22 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
 
 // Device device
+//
 // swagger:model device
 type Device struct {
 
 	// address
-	Address int32 `json:"address",omitempty"`
+	Address int32 `json:"address\",omitempty"`
 
 	// allow packet read
 	AllowPacketRead int32 `json:"allow_packet_read,omitempty"`
@@ -35,7 +36,7 @@ type Device struct {
 	DeviceTypeID int32 `json:"device_type_id,omitempty"`
 
 	// device type name
-	DeviceTypeName string `json:"device_type_name",omitempty"`
+	DeviceTypeName string `json:"device_type_name\",omitempty"`
 
 	// device type protocol
 	DeviceTypeProtocol string `json:"device_type_protocol,omitempty"`
@@ -102,7 +103,7 @@ type Device struct {
 	SymbolTimeout uint16 `json:"symbol_timeout,omitempty"`
 
 	// time zone
-	TimeZone string `json:"time_zone",omitempty"`
+	TimeZone string `json:"time_zone\",omitempty"`
 }
 
 // Validate validates this device
@@ -137,7 +138,6 @@ func (m *Device) validateID(formats strfmt.Registry) error {
 }
 
 func (m *Device) validateParameterCategories(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.ParameterCategories) { // not required
 		return nil
 	}
@@ -162,7 +162,6 @@ func (m *Device) validateParameterCategories(formats strfmt.Registry) error {
 }
 
 func (m *Device) validateParameters(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Parameters) { // not required
 		return nil
 	}
@@ -174,6 +173,60 @@ func (m *Device) validateParameters(formats strfmt.Registry) error {
 
 		if m.Parameters[i] != nil {
 			if err := m.Parameters[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("parameters" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this device based on the context it is used
+func (m *Device) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateParameterCategories(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateParameters(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *Device) contextValidateParameterCategories(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.ParameterCategories); i++ {
+
+		if m.ParameterCategories[i] != nil {
+			if err := m.ParameterCategories[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("parameter_categories" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *Device) contextValidateParameters(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.Parameters); i++ {
+
+		if m.Parameters[i] != nil {
+			if err := m.Parameters[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("parameters" + "." + strconv.Itoa(i))
 				}

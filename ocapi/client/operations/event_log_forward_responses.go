@@ -10,10 +10,9 @@ import (
 	"io"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
-
-	models "spkvpenergy/ocapi/models"
+	"spkvpenergy/ocapi/models"
 )
 
 // EventLogForwardReader is a Reader for the EventLogForward structure.
@@ -47,7 +46,7 @@ func NewEventLogForwardOK() *EventLogForwardOK {
 	return &EventLogForwardOK{}
 }
 
-/*EventLogForwardOK handles this case with default header values.
+/* EventLogForwardOK describes a response with status code 200, with default header values.
 
 Events for all company devices
 */
@@ -58,7 +57,6 @@ type EventLogForwardOK struct {
 func (o *EventLogForwardOK) Error() string {
 	return fmt.Sprintf("[POST /device/events-log-forward/{id}][%d] eventLogForwardOK  %+v", 200, o.Payload)
 }
-
 func (o *EventLogForwardOK) GetPayload() models.EventLogResp {
 	return o.Payload
 }
@@ -80,7 +78,7 @@ func NewEventLogForwardDefault(code int) *EventLogForwardDefault {
 	}
 }
 
-/*EventLogForwardDefault handles this case with default header values.
+/* EventLogForwardDefault describes a response with status code -1, with default header values.
 
 unexpected error
 */
@@ -98,7 +96,6 @@ func (o *EventLogForwardDefault) Code() int {
 func (o *EventLogForwardDefault) Error() string {
 	return fmt.Sprintf("[POST /device/events-log-forward/{id}][%d] eventLogForward default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *EventLogForwardDefault) GetPayload() *models.ErrorModel {
 	return o.Payload
 }

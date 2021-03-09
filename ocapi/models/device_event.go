@@ -6,15 +6,16 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // DeviceEvent device event
+//
 // swagger:model deviceEvent
 type DeviceEvent struct {
 
@@ -85,7 +86,6 @@ func (m *DeviceEvent) Validate(formats strfmt.Registry) error {
 }
 
 func (m *DeviceEvent) validateParams(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Params) { // not required
 		return nil
 	}
@@ -97,6 +97,38 @@ func (m *DeviceEvent) validateParams(formats strfmt.Registry) error {
 
 		if m.Params[i] != nil {
 			if err := m.Params[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("params" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this device event based on the context it is used
+func (m *DeviceEvent) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateParams(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *DeviceEvent) contextValidateParams(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.Params); i++ {
+
+		if m.Params[i] != nil {
+			if err := m.Params[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("params" + "." + strconv.Itoa(i))
 				}
@@ -128,6 +160,7 @@ func (m *DeviceEvent) UnmarshalBinary(b []byte) error {
 }
 
 // DeviceEventParamsItems0 device event params items0
+//
 // swagger:model DeviceEventParamsItems0
 type DeviceEventParamsItems0 struct {
 
@@ -149,6 +182,11 @@ type DeviceEventParamsItems0 struct {
 
 // Validate validates this device event params items0
 func (m *DeviceEventParamsItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this device event params items0 based on context it is used
+func (m *DeviceEventParamsItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 

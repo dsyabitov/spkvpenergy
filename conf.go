@@ -13,6 +13,7 @@ type Conf struct {
 	LogLevel string `json:"log_level"`
 	OperativeParams []string `json:"operative_params"`
 	DeviceId int32 `json:"device_id"`
+	Port int32 `json:"port"`
 }
 
 func NewConfig(filename string) (res Conf, err error) {

@@ -10,10 +10,9 @@ import (
 	"io"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
-
-	models "spkvpenergy/ocapi/models"
+	"spkvpenergy/ocapi/models"
 )
 
 // EventListByDeviceReader is a Reader for the EventListByDevice structure.
@@ -47,7 +46,7 @@ func NewEventListByDeviceOK() *EventListByDeviceOK {
 	return &EventListByDeviceOK{}
 }
 
-/*EventListByDeviceOK handles this case with default header values.
+/* EventListByDeviceOK describes a response with status code 200, with default header values.
 
 events response
 */
@@ -58,7 +57,6 @@ type EventListByDeviceOK struct {
 func (o *EventListByDeviceOK) Error() string {
 	return fmt.Sprintf("[POST /event/list-by-device][%d] eventListByDeviceOK  %+v", 200, o.Payload)
 }
-
 func (o *EventListByDeviceOK) GetPayload() []*models.DeviceEvent {
 	return o.Payload
 }
@@ -80,7 +78,7 @@ func NewEventListByDeviceDefault(code int) *EventListByDeviceDefault {
 	}
 }
 
-/*EventListByDeviceDefault handles this case with default header values.
+/* EventListByDeviceDefault describes a response with status code -1, with default header values.
 
 unexpected error
 */
@@ -98,7 +96,6 @@ func (o *EventListByDeviceDefault) Code() int {
 func (o *EventListByDeviceDefault) Error() string {
 	return fmt.Sprintf("[POST /event/list-by-device][%d] eventListByDevice default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *EventListByDeviceDefault) GetPayload() *models.ErrorModel {
 	return o.Payload
 }

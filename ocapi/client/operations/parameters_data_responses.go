@@ -10,10 +10,9 @@ import (
 	"io"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
-
-	models "spkvpenergy/ocapi/models"
+	"spkvpenergy/ocapi/models"
 )
 
 // ParametersDataReader is a Reader for the ParametersData structure.
@@ -47,7 +46,7 @@ func NewParametersDataOK() *ParametersDataOK {
 	return &ParametersDataOK{}
 }
 
-/*ParametersDataOK handles this case with default header values.
+/* ParametersDataOK describes a response with status code 200, with default header values.
 
 parameters/data response
 */
@@ -58,7 +57,6 @@ type ParametersDataOK struct {
 func (o *ParametersDataOK) Error() string {
 	return fmt.Sprintf("[POST /parameters/data][%d] parametersDataOK  %+v", 200, o.Payload)
 }
-
 func (o *ParametersDataOK) GetPayload() models.ParametersDataResp {
 	return o.Payload
 }
@@ -80,7 +78,7 @@ func NewParametersDataDefault(code int) *ParametersDataDefault {
 	}
 }
 
-/*ParametersDataDefault handles this case with default header values.
+/* ParametersDataDefault describes a response with status code -1, with default header values.
 
 unexpected error
 */
@@ -98,7 +96,6 @@ func (o *ParametersDataDefault) Code() int {
 func (o *ParametersDataDefault) Error() string {
 	return fmt.Sprintf("[POST /parameters/data][%d] parametersData default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *ParametersDataDefault) GetPayload() *models.ErrorModel {
 	return o.Payload
 }

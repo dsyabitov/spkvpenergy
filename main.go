@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"flag"
+	"fmt"
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	"github.com/improbable-eng/grpc-web/go/grpcweb"
@@ -76,7 +77,7 @@ func main() {
 
 	srv := &http.Server{
 		Handler: handlers.CompressHandler(router),
-		Addr:    ":8888",
+		Addr:    fmt.Sprintf(":%d", conf.Port),
 		// Disable because of grpc streams fails
 		//WriteTimeout: 60 * time.Second,
 		//ReadTimeout:  60 * time.Second,

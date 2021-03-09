@@ -230,7 +230,7 @@ func (e *EnergyImpl) LastData(request *StringRequest, response Energy_LastDataSe
 	}
 }
 
-func (e *EnergyImpl) getDeviceStatus(cli *client.OwenCloud, auth *ocapi.CustomAuth) (hasAlarm, online bool, err error) {
+func (e *EnergyImpl) getDeviceStatus(cli *client.OwenCloudAPI, auth *ocapi.CustomAuth) (hasAlarm, online bool, err error) {
 	p := operations.NewDeviceIndexParams().WithBody(&models.DeviceIndexRequest{DeviceIds: []int64{int64(e.DeviceId)}})
 	r, err := cli.Operations.DeviceIndex(p, auth)
 	if err != nil {
@@ -243,7 +243,7 @@ func (e *EnergyImpl) getDeviceStatus(cli *client.OwenCloud, auth *ocapi.CustomAu
 	return false, false, errors.New("empty response from owencloud")
 }
 
-func (e *EnergyImpl) loadParams(cli *client.OwenCloud, auth *ocapi.CustomAuth) error {
+func (e *EnergyImpl) loadParams(cli *client.OwenCloudAPI, auth *ocapi.CustomAuth) error {
 	e.paramsLock.Lock()
 	defer e.paramsLock.Unlock()
 

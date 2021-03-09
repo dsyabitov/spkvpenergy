@@ -13,62 +13,75 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	cr "github.com/go-openapi/runtime/client"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
-
-	models "spkvpenergy/ocapi/models"
+	"spkvpenergy/ocapi/models"
 )
 
-// NewAuthParams creates a new AuthParams object
-// with the default values initialized.
+// NewAuthParams creates a new AuthParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewAuthParams() *AuthParams {
-	var ()
 	return &AuthParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewAuthParamsWithTimeout creates a new AuthParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewAuthParamsWithTimeout(timeout time.Duration) *AuthParams {
-	var ()
 	return &AuthParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewAuthParamsWithContext creates a new AuthParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewAuthParamsWithContext(ctx context.Context) *AuthParams {
-	var ()
 	return &AuthParams{
-
 		Context: ctx,
 	}
 }
 
 // NewAuthParamsWithHTTPClient creates a new AuthParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewAuthParamsWithHTTPClient(client *http.Client) *AuthParams {
-	var ()
 	return &AuthParams{
 		HTTPClient: client,
 	}
 }
 
-/*AuthParams contains all the parameters to send to the API endpoint
-for the auth operation typically these are written to a http.Request
+/* AuthParams contains all the parameters to send to the API endpoint
+   for the auth operation.
+
+   Typically these are written to a http.Request.
 */
 type AuthParams struct {
 
-	/*Body*/
+	// Body.
 	Body *models.AuthOpen
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the auth params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *AuthParams) WithDefaults() *AuthParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the auth params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *AuthParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the auth params
@@ -122,7 +135,6 @@ func (o *AuthParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

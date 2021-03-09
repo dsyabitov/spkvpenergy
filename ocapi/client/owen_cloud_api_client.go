@@ -6,15 +6,14 @@ package client
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"spkvpenergy/ocapi/client/operations"
+
 	"github.com/go-openapi/runtime"
 	httptransport "github.com/go-openapi/runtime/client"
-
-	strfmt "github.com/go-openapi/strfmt"
-
-	"spkvpenergy/ocapi/client/operations"
+	"github.com/go-openapi/strfmt"
 )
 
-// Default owen cloud HTTP client.
+// Default owen cloud API HTTP client.
 var Default = NewHTTPClient(nil)
 
 const (
@@ -29,14 +28,14 @@ const (
 // DefaultSchemes are the default schemes found in Meta (info) section of spec file
 var DefaultSchemes = []string{"https"}
 
-// NewHTTPClient creates a new owen cloud HTTP client.
-func NewHTTPClient(formats strfmt.Registry) *OwenCloud {
+// NewHTTPClient creates a new owen cloud API HTTP client.
+func NewHTTPClient(formats strfmt.Registry) *OwenCloudAPI {
 	return NewHTTPClientWithConfig(formats, nil)
 }
 
-// NewHTTPClientWithConfig creates a new owen cloud HTTP client,
+// NewHTTPClientWithConfig creates a new owen cloud API HTTP client,
 // using a customizable transport config.
-func NewHTTPClientWithConfig(formats strfmt.Registry, cfg *TransportConfig) *OwenCloud {
+func NewHTTPClientWithConfig(formats strfmt.Registry, cfg *TransportConfig) *OwenCloudAPI {
 	// ensure nullable parameters have default
 	if cfg == nil {
 		cfg = DefaultTransportConfig()
@@ -47,18 +46,16 @@ func NewHTTPClientWithConfig(formats strfmt.Registry, cfg *TransportConfig) *Owe
 	return New(transport, formats)
 }
 
-// New creates a new owen cloud client
-func New(transport runtime.ClientTransport, formats strfmt.Registry) *OwenCloud {
+// New creates a new owen cloud API client
+func New(transport runtime.ClientTransport, formats strfmt.Registry) *OwenCloudAPI {
 	// ensure nullable parameters have default
 	if formats == nil {
 		formats = strfmt.Default
 	}
 
-	cli := new(OwenCloud)
+	cli := new(OwenCloudAPI)
 	cli.Transport = transport
-
 	cli.Operations = operations.New(transport, formats)
-
 	return cli
 }
 
@@ -101,17 +98,15 @@ func (cfg *TransportConfig) WithSchemes(schemes []string) *TransportConfig {
 	return cfg
 }
 
-// OwenCloud is a client for owen cloud
-type OwenCloud struct {
-	Operations *operations.Client
+// OwenCloudAPI is a client for owen cloud API
+type OwenCloudAPI struct {
+	Operations operations.ClientService
 
 	Transport runtime.ClientTransport
 }
 
 // SetTransport changes the transport on the client and all its subresources
-func (c *OwenCloud) SetTransport(transport runtime.ClientTransport) {
+func (c *OwenCloudAPI) SetTransport(transport runtime.ClientTransport) {
 	c.Transport = transport
-
 	c.Operations.SetTransport(transport)
-
 }

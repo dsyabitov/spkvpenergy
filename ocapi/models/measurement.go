@@ -6,12 +6,14 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
+	"context"
 
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // Measurement measurement
+//
 // swagger:model measurement
 type Measurement struct {
 
@@ -30,6 +32,11 @@ type Measurement struct {
 
 // Validate validates this measurement
 func (m *Measurement) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this measurement based on context it is used
+func (m *Measurement) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 

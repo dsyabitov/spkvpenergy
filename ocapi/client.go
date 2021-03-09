@@ -66,7 +66,7 @@ func (a *CustomAuth) AuthenticateRequest(req runtime.ClientRequest, reg strfmt.R
 }
 
 type Client struct {
-	owencloud *client.OwenCloud
+	owencloud *client.OwenCloudAPI
 	conf *RESTAPIConf
 	auth *CustomAuth
 }
@@ -136,7 +136,7 @@ func (c *Client) checkAuth() error {
 	return nil
 }
 
-func (c *Client) GetClientAndAuth() (*client.OwenCloud, *CustomAuth) {
+func (c *Client) GetClientAndAuth() (*client.OwenCloudAPI, *CustomAuth) {
 	if c.auth == nil || c.checkAuth() != nil {
 		body := &models.AuthOpen{
 			Login:    &c.conf.Login,

@@ -6,12 +6,14 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
+	"context"
 
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // ParameterDataValue parameter data value
+//
 // swagger:model parameterDataValue
 type ParameterDataValue struct {
 
@@ -30,6 +32,11 @@ type ParameterDataValue struct {
 
 // Validate validates this parameter data value
 func (m *ParameterDataValue) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this parameter data value based on context it is used
+func (m *ParameterDataValue) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 

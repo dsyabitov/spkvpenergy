@@ -10,10 +10,9 @@ import (
 	"io"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
-
-	models "spkvpenergy/ocapi/models"
+	"spkvpenergy/ocapi/models"
 )
 
 // AuthReader is a Reader for the Auth structure.
@@ -47,7 +46,7 @@ func NewAuthOK() *AuthOK {
 	return &AuthOK{}
 }
 
-/*AuthOK handles this case with default header values.
+/* AuthOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -58,7 +57,6 @@ type AuthOK struct {
 func (o *AuthOK) Error() string {
 	return fmt.Sprintf("[POST /auth/open][%d] authOK  %+v", 200, o.Payload)
 }
-
 func (o *AuthOK) GetPayload() *models.AuthResp {
 	return o.Payload
 }
@@ -82,7 +80,7 @@ func NewAuthDefault(code int) *AuthDefault {
 	}
 }
 
-/*AuthDefault handles this case with default header values.
+/* AuthDefault describes a response with status code -1, with default header values.
 
 unexpected error
 */
@@ -100,7 +98,6 @@ func (o *AuthDefault) Code() int {
 func (o *AuthDefault) Error() string {
 	return fmt.Sprintf("[POST /auth/open][%d] auth default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *AuthDefault) GetPayload() *models.ErrorModel {
 	return o.Payload
 }

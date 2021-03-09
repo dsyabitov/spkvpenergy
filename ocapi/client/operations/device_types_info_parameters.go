@@ -13,60 +13,73 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	cr "github.com/go-openapi/runtime/client"
-
-	strfmt "github.com/go-openapi/strfmt"
+	"github.com/go-openapi/strfmt"
 )
 
-// NewDeviceTypesInfoParams creates a new DeviceTypesInfoParams object
-// with the default values initialized.
+// NewDeviceTypesInfoParams creates a new DeviceTypesInfoParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewDeviceTypesInfoParams() *DeviceTypesInfoParams {
-	var ()
 	return &DeviceTypesInfoParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewDeviceTypesInfoParamsWithTimeout creates a new DeviceTypesInfoParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewDeviceTypesInfoParamsWithTimeout(timeout time.Duration) *DeviceTypesInfoParams {
-	var ()
 	return &DeviceTypesInfoParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewDeviceTypesInfoParamsWithContext creates a new DeviceTypesInfoParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewDeviceTypesInfoParamsWithContext(ctx context.Context) *DeviceTypesInfoParams {
-	var ()
 	return &DeviceTypesInfoParams{
-
 		Context: ctx,
 	}
 }
 
 // NewDeviceTypesInfoParamsWithHTTPClient creates a new DeviceTypesInfoParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewDeviceTypesInfoParamsWithHTTPClient(client *http.Client) *DeviceTypesInfoParams {
-	var ()
 	return &DeviceTypesInfoParams{
 		HTTPClient: client,
 	}
 }
 
-/*DeviceTypesInfoParams contains all the parameters to send to the API endpoint
-for the device types info operation typically these are written to a http.Request
+/* DeviceTypesInfoParams contains all the parameters to send to the API endpoint
+   for the device types info operation.
+
+   Typically these are written to a http.Request.
 */
 type DeviceTypesInfoParams struct {
 
-	/*Body*/
+	// Body.
 	Body []int64
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the device types info params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *DeviceTypesInfoParams) WithDefaults() *DeviceTypesInfoParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the device types info params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *DeviceTypesInfoParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the device types info params
@@ -120,7 +133,6 @@ func (o *DeviceTypesInfoParams) WriteToRequest(r runtime.ClientRequest, reg strf
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err
