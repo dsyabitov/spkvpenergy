@@ -2,19 +2,6 @@ FROM golang
 
 COPY  ./ /go/src/github.com/dsyabitov/spkvpenergy/
 
-#RUN cd /opt/src \
-#    && cp scripts/run.sh ../
-#RUN cd /opt/src \
-#    && go mod download \
-#    && go build  -o /opt/event-service \
-#    && cp conf.json /opt \
-#    && cp run.sh /opt \
-#    && chmod +x /opt/*.sh \
-#    && cd /go/src \
-#    && go get github.com/go-delve/delve/cmd/dlv \
-#    && cp /go/bin/dlv /opt/
-
-
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
 && apt-get update \
 && apt-get install -y protobuf-compiler nodejs \
