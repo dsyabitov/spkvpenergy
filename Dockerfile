@@ -28,6 +28,8 @@ RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
 && cp -r site/static /opt/site/ \
 && cp spkvpenergy /opt/ \
 && cp config.json /opt/ \
-&& cp scripts/run.sh /opt/
+&& cp scripts/run.sh /opt/ \
+&& apt-get clean \
+&& rm -fr site/node-modules
 
 ENTRYPOINT ["/opt/run.sh"]

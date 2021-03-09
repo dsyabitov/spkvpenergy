@@ -1,4 +1,5 @@
 .body {
   background-image: url(./spk.jpg);
   background-size: cover;
+  overflow: auto;
 }
