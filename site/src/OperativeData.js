@@ -74,7 +74,7 @@ class OperativeData extends Component {
     }
 
     componentDidMount() {
-        console.log("LastDataTable mounted!");
+        //console.log("LastDataTable mounted!");
         this.loadData()
     }
 

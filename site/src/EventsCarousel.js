@@ -47,7 +47,7 @@ class EventsCarousel extends Component {
     }
 
     render() {
-        console.log("EventsCarousel render");
+        //console.log("EventsCarousel render");
 
         let r = this.state.items.map( (item, i) => <EventItem key={i} item={item} /> )
 
@@ -69,7 +69,7 @@ class EventsCarousel extends Component {
                             style = {
                                 height: "100%"
                             }
-                            console.log("NavButton" + style);
+                            //console.log("NavButton" + style);
                             if (next) {
                                 return (
                                     <IconButton
@@ -111,8 +111,8 @@ class EventsCarousel extends Component {
         this.setState({
             prevDisabled: false,
         });
-        console.log(`index ${this.index}`);
-        console.log(`NEXT! we left ${active}, and are now at ${next}, index ${this.index}`);
+        //console.log(`index ${this.index}`);
+        //console.log(`NEXT! we left ${active}, and are now at ${next}, index ${this.index}`);
 
         this.mapItems(next);
         if (this.index + 1 == this.events.length - 1) {
@@ -127,7 +127,7 @@ class EventsCarousel extends Component {
             nextDisabled: false,
         });
 
-        console.log(`PREV! we left ${active}, and are now at ${prev}, index ${this.index}`);
+        //console.log(`PREV! we left ${active}, and are now at ${prev}, index ${this.index}`);
         this.mapItems(prev);
 
         if (this.index - 1 == 0 ){
@@ -162,7 +162,7 @@ class EventsCarousel extends Component {
             this.mapItem(prev, this.index - 1);
         }
 
-        console.log(`( Next == ${next}, Number == ${this.state.items[next].number} ), (Prev == ${prev}, Number == ${this.state.items[prev].number})`);
+        //console.log(`( Next == ${next}, Number == ${this.state.items[next].number} ), (Prev == ${prev}, Number == ${this.state.items[prev].number})`);
     }
 
     mapItem(itemIndex, eventIndex) {
@@ -184,7 +184,7 @@ class EventsCarousel extends Component {
         this.setState({
             loadingActive: true,
         })
-        console.log(`Load NEXT data before: index = ${this.index} ; events = ${this.events}`);
+        //console.log(`Load NEXT data before: index = ${this.index} ; events = ${this.events}`);
 
         let api = new Api();
         api.loadEventsBackward(new Date((this.events[this.events.length - 1].getStart() - 1) * 1000), EVENTS_TO_LOAD, (err, resp) => {
@@ -194,7 +194,7 @@ class EventsCarousel extends Component {
             }
 
             resp.getEventsList().forEach( (v,i) => {
-                console.log(v.getName() + " " + v.getStart() + " " + v.getEnd() + " " + v.getParams());
+                //console.log(v.getName() + " " + v.getStart() + " " + v.getEnd() + " " + v.getParams());
                 this.events.push(v);
                 if (this.events.length > MAX_EVENTS) {
                     this.events.shift();
@@ -202,7 +202,7 @@ class EventsCarousel extends Component {
                 }
             });
 
-            console.log(`Load NEXT data after: index = ${this.index} ; events = ${this.events}`);
+            //console.log(`Load NEXT data after: index = ${this.index} ; events = ${this.events}`);
 
             this.setState({
                 loadingActive: false,
@@ -214,20 +214,20 @@ class EventsCarousel extends Component {
         this.setState({
             loadingActive: true,
         })
-        console.log(`Load PREV data before: index = ${this.index} ; events = ${this.events}`);
+        //console.log(`Load PREV data before: index = ${this.index} ; events = ${this.events}`);
         let api = new Api();
 
         api.loadEventsForward(new Date((this.events[0].getStart() + 1) * 1000), EVENTS_TO_LOAD, (err, resp) => {
 
             resp.getEventsList().forEach( (v,i) => {
-                console.log(v.getName() + " " + v.getStart() + " " + v.getEnd() + " " + v.getParams());
+                //console.log(v.getName() + " " + v.getStart() + " " + v.getEnd() + " " + v.getParams());
                 this.events.unshift(v)
                 this.index++;
                 if (this.events.length > MAX_EVENTS) {
                     this.events.pop();
                 }
             });
-            console.log(`Load PREV data after: index = ${this.index} ; events = ${this.events}`);
+            //console.log(`Load PREV data after: index = ${this.index} ; events = ${this.events}`);
 
             this.setState({
                 loadingActive: false,
@@ -237,7 +237,7 @@ class EventsCarousel extends Component {
     }
 
     componentDidMount() {
-        console.log("EventsTable did mount!");
+        //console.log("EventsTable did mount!");
         let api = new Api();
         api.loadEventsBackward(new Date(), EVENTS_TO_LOAD, (err, resp) => {
             if (err != null) {
@@ -245,16 +245,16 @@ class EventsCarousel extends Component {
                 return;
             }
 
-            console.log("Events Loaded")
-            console.log("haveMore: " + resp.getHavemore());
-            console.log("firstDate: " + resp.getFirstdate());
-            console.log("lastDate: " + resp.getLastdate());
+            //console.log("Events Loaded")
+           // console.log("haveMore: " + resp.getHavemore());
+            //console.log("firstDate: " + resp.getFirstdate());
+            //console.log("lastDate: " + resp.getLastdate());
 
             const data = [];
             let api = new Api();
 
             resp.getEventsList().forEach( (v,i) => {
-                console.log(v.getName() + " " + v.getStart() + " " + v.getEnd() + " " + v.getParams());
+                //console.log(v.getName() + " " + v.getStart() + " " + v.getEnd() + " " + v.getParams());
                 this.events.push(v);
             });
             this.mapItem(0, 0);

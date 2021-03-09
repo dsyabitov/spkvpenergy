@@ -18,13 +18,13 @@ class VoltageChart extends Component {
                     height: 700,
                     events: {
                         scrolled: function (chartContext, {xaxis}) {
-                            console.log("Scrolled!");
-                            console.log(xaxis.min + " : " + xaxis.max);
+                            //console.log("Scrolled!");
+                            //console.log(xaxis.min + " : " + xaxis.max);
                         },
                         zoomed: (chartContext, { xaxis, yaxis }) => {
-                            console.log("Zoomed!")
+                            //console.log("Zoomed!")
                             this.loadData(new Date(xaxis.min), new Date(xaxis.max));
-                            console.log(xaxis.min + " : " + xaxis.max);
+                            //console.log(xaxis.min + " : " + xaxis.max);
                         }
                     },
                     toolbar: {
@@ -105,7 +105,7 @@ class VoltageChart extends Component {
 
     }
     componentDidMount() {
-        console.log("Component did mount!");
+        //console.log("Component did mount!");
         this.loadData(new Date(Date.now() - 24 * 60 * 60 * 1000), new Date());
     }
 }
